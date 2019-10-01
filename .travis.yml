@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t bgatelet/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run bgatelet/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t bgatelet/multi-client ./client
+  - docker build -t bgatelet/multi-nginx ./nginx
+  - docker build -t bgatelet/multi-server ./server
+  - docker build -t bgatelet/multi-worker ./worker
+  # Log in to the Docker CLI.
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to Docker Hub.
+  - docker push bgatelet/multi-client
+  - docker push bgatelet/multi-nginx
+  - docker push bgatelet/multi-server
+  - docker push bgatelet/multi-worker
