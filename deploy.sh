@@ -1,6 +1,6 @@
 docker build -t bgatelet/multi-client:latest -t bgatelet/multi-client:$SHA -f ./client/Dockerfile ./client
 docker build -t bgatelet/multi-server:latest -t bgatelet/multi-server:$SHA -f ./server/Dockerfile ./server
-docker build -t bgatelet/multi-worker:latest -t bgatelet/multi-work:$SHA -f ./worker/Dockerfile ./worker
+docker build -t bgatelet/multi-worker:latest -t bgatelet/multi-worker:$SHA -f ./worker/Dockerfile ./worker
 
 docker push bgatelet/multi-client:latest
 docker push bgatelet/multi-server:latest
